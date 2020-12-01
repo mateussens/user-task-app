@@ -1,0 +1,13 @@
+version: "3.5"
+
+services:
+  user-task-app:
+    image: user-task-app
+    network_mode: host
+    ports:
+      - 4200:4200
+    volumes:
+      - "${APP_DIR:-.}:/app"
+      - '/app/node_modules'
+    command: >
+      sh -c "ng serve"
