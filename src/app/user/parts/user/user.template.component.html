@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>Editar usuário</h1>
+
+<div mat-dialog-content>
+    <form name="bankForm"
+          [formGroup]="userForm">
+        <div class="auto-width">
+            <mat-form-field>
+                <input matInput
+                       name="name"
+                       placeholder="Nome"
+                       required
+                       [(ngModel)]="user.name"
+                       formControlName="name">
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+
+<mat-dialog-actions align="end">
+    <button mat-button
+            mat-dialog-close>Cancelar
+    </button>
+    <button mat-raised-button
+            color="primary"
+            (click)="save()">Salvar
+    </button>
+</mat-dialog-actions>

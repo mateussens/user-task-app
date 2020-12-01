@@ -1,0 +1,64 @@
+<div class="container shadow bg-white rounded">
+  <div class="row p-3">
+    <div class="col order-first center">
+      Listagem de tarefas
+    </div>
+    <div class="col order-last text-right center">
+      <button class="btn btn-primary" type="submit" (click)="onNew($event)">+ adicionar</button>
+    </div>
+  </div>
+  <div class="row p-3 mb-5">
+    <table mat-table [dataSource]="dataSource" class="table">
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> Descrição</th>
+        <td mat-cell *matCellDef="let task">
+          {{task.description}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="user">
+        <th mat-header-cell *matHeaderCellDef> Usuário</th>
+        <td mat-cell *matCellDef="let task">
+          {{task.user.name}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status</th>
+        <td mat-cell *matCellDef="let task">
+          <mat-slide-toggle [(ngModel)]="!task.is_open" (change)="updateStatus(task.id, !task.is_open)">
+            <span>{{task.is_open ? 'Aberto' : 'Resolvido'}}</span>
+          </mat-slide-toggle>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Ações</th>
+        <td mat-cell *matCellDef="let task">
+          <div fxHide.xs
+               fxHide.sm>
+            <button mat-icon-button
+                    (click)="onEdit(task)"
+                    matTooltip="Editar usuário">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button
+                    matTooltip="Remover usuário"
+                    (click)="onRemove(task.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator #paginator
+                   [length]="resultsLength"
+                   [pageIndex]="0"
+                   [pageSize]="10"
+                   [pageSizeOptions]="[10, 20, 50, 100]"
+                   (page)="changePage($event)"></mat-paginator>
+
+  </div>
+
+</div>

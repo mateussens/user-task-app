@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>Tarefa</h1>
+
+<div mat-dialog-content style="width: 540px">
+  <form name="bankForm"
+        [formGroup]="taskForm">
+    <div>
+      <mat-form-field class="w-100">
+        <input type="text"
+               matInput
+               formControlName="user"
+               placeholder="Responsável"
+               [formControl]="user"
+               [(ngModel)]="task.user"
+               [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let user of filteredOptions | async" [value]="user">
+            {{user.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <textarea matInput
+                  placeholder="Descrição da tarefa"
+                  [(ngModel)]="task.description"
+                  rows="3"
+                  formControlName="description"></textarea>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<mat-dialog-actions align="end">
+  <button mat-button
+          mat-dialog-close>Cancelar
+  </button>
+  <button mat-raised-button
+          color="primary"
+          (click)="save()">Salvar
+  </button>
+</mat-dialog-actions>

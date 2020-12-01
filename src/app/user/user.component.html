@@ -1,0 +1,53 @@
+<div class="container shadow bg-white rounded">
+  <div class="row p-3">
+    <div class="col order-first center">
+      Listagem de usuários
+    </div>
+    <div class="col order-last text-right center">
+      <button class="btn btn-primary" type="submit" (click)="onNew($event)">+ adicionar</button>
+    </div>
+  </div>
+  <div class="row p-3 mb-5">
+    <table mat-table [dataSource]="dataSource" class="table">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Nome</th>
+        <td mat-cell *matCellDef="let user">
+          {{user.name}}
+          <button mat-icon-button [routerLink]="'/task'" [queryParams]="{'user': user.id}">
+            <mat-icon>north_east</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Ações</th>
+        <td mat-cell *matCellDef="let user">
+          <div fxHide.xs
+               fxHide.sm>
+            <button mat-icon-button
+                    (click)="onEdit(user)"
+                    matTooltip="Editar usuário">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button
+                    matTooltip="Remover usuário"
+                    (click)="onRemove(user.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator #paginator
+                   [length]="resultsLength"
+                   [pageIndex]="0"
+                   [pageSize]="10"
+                   [pageSizeOptions]="[10, 20, 50, 100]"
+                   (page)="changePage($event)"></mat-paginator>
+
+  </div>
+
+</div>
